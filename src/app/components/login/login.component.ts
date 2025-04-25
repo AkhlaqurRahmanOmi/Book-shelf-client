@@ -65,6 +65,8 @@ export class LoginComponent implements OnInit {
       ]
     };
 
+    
+
     // Create form group from configuration
     this.loginForm = this.validationService.createFormGroup(this.formConfig);
   }
