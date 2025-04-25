@@ -1,0 +1,128 @@
+<div class="signup-page">
+  <div class="signup-container app-card">
+    <div class="signup-header">
+      <h2 class="app-subtitle">Create your account</h2>
+      <p class="signup-subtext">
+        Or <a routerLink="/login" class="signup-link">sign in to your existing account</a>
+      </p>
+    </div>
+
+    <form class="signup-form" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <!-- Success message -->
+      <div *ngIf="successMessage" class="signup-success app-success" role="alert">
+        <span>{{ successMessage }}</span>
+      </div>
+
+      <!-- Error message -->
+      <div *ngIf="errorMessage" class="signup-error app-error" role="alert">
+        <span>{{ errorMessage }}</span>
+      </div>
+
+      <!-- Name input -->
+      <div class="signup-form-group">
+        <app-app-input-field
+          formControlName="name"
+          label="Full Name"
+          type="text"
+          placeholder="Enter your full name"
+        ></app-app-input-field>
+
+        <!-- Name validation errors -->
+        <app-validation-errors
+          [control]="signupForm.get('name')"
+          fieldName="name"
+          [validationRules]="fieldValidations['name']"
+        ></app-validation-errors>
+      </div>
+
+      <!-- Username input -->
+      <div class="signup-form-group">
+        <app-app-input-field
+          formControlName="username"
+          label="Username"
+          type="text"
+          placeholder="Choose a username"
+        ></app-app-input-field>
+
+        <!-- Username validation errors -->
+        <app-validation-errors
+          [control]="signupForm.get('username')"
+          fieldName="username"
+          [validationRules]="fieldValidations['username']"
+        ></app-validation-errors>
+      </div>
+
+      <!-- Email input -->
+      <div class="signup-form-group">
+        <app-app-input-field
+          formControlName="email"
+          label="Email address"
+          type="email"
+          placeholder="Enter your email"
+        ></app-app-input-field>
+
+        <!-- Email validation errors -->
+        <app-validation-errors
+          [control]="signupForm.get('email')"
+          fieldName="email"
+          [validationRules]="fieldValidations['email']"
+        ></app-validation-errors>
+      </div>
+
+      <!-- Password input -->
+      <div class="signup-form-group">
+        <app-app-input-field
+          formControlName="password"
+          label="Password"
+          type="password"
+          placeholder="Create a password"
+        ></app-app-input-field>
+
+        <!-- Password validation errors -->
+        <app-validation-errors
+          [control]="signupForm.get('password')"
+          fieldName="password"
+          [validationRules]="fieldValidations['password']"
+        ></app-validation-errors>
+      </div>
+
+      <!-- Confirm Password input -->
+      <div class="signup-form-group">
+        <app-app-input-field
+          formControlName="confirmPassword"
+          label="Confirm Password"
+          type="password"
+          placeholder="Confirm your password"
+        ></app-app-input-field>
+
+        <!-- Confirm Password validation errors -->
+        <app-validation-errors
+          [control]="signupForm.get('confirmPassword')"
+          fieldName="confirmPassword"
+          [validationRules]="fieldValidations['confirmPassword']"
+        ></app-validation-errors>
+      </div>
+
+      <!-- Terms and conditions -->
+      <div class="signup-terms">
+        <input id="terms" name="terms" type="checkbox" class="signup-checkbox">
+        <label for="terms" class="signup-checkbox-label">
+          I agree to the <a href="#" class="signup-link">Terms of Service</a> and <a href="#" class="signup-link">Privacy Policy</a>
+        </label>
+      </div>
+
+      <!-- Submit button -->
+      <div class="signup-button-container">
+        <app-app-button
+          [label]="isLoading ? 'Creating account...' : 'Create account'"
+          type="submit"
+          [disabled]="signupForm.invalid || isLoading"
+          [isLoading]="isLoading"
+          variant="primary"
+          [fullWidth]="true"
+          (onClick)="onSubmit()"
+        ></app-app-button>
+      </div>
+    </form>
+  </div>
+</div>

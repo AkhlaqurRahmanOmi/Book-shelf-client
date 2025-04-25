@@ -1,0 +1,80 @@
+<div class="login-page">
+  <div class="login-container app-card">
+    <div class="login-header">
+      <h2 class="app-subtitle">Sign in to your account</h2>
+      <p class="login-subtext">
+        Or <a routerLink="/signup" class="login-link">create a new account</a>
+      </p>
+    </div>
+
+    <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <!-- Error message -->
+      <div *ngIf="errorMessage" class="login-error app-error" role="alert">
+        <span>{{ errorMessage }}</span>
+      </div>
+
+      <!-- Email input -->
+      <div class="login-form-group">
+        <app-app-input-field
+          formControlName="email"
+          label="Email address"
+          type="email"
+          placeholder="Enter your email"
+        ></app-app-input-field>
+
+        <!-- Email validation errors -->
+        <app-validation-errors
+          [control]="loginForm.get('email')"
+          fieldName="email"
+          [validationRules]="fieldValidations['email']"
+        ></app-validation-errors>
+      </div>
+
+      <!-- Password input -->
+      <div class="login-form-group">
+        <app-app-input-field
+          formControlName="password"
+          label="Password"
+          type="password"
+          placeholder="Enter your password"
+        ></app-app-input-field>
+
+        <!-- Password validation errors -->
+        <app-validation-errors
+          [control]="loginForm.get('password')"
+          fieldName="password"
+          [validationRules]="fieldValidations['password']"
+        ></app-validation-errors>
+      </div>
+
+      <!-- Remember me and forgot password -->
+      <div class="login-options">
+        <div class="login-remember">
+          <input id="remember-me" name="remember-me" type="checkbox" class="login-checkbox">
+          <label for="remember-me" class="login-checkbox-label">
+            Remember me
+          </label>
+        </div>
+
+        <div class="login-forgot">
+          <a href="#" class="login-link">
+            Forgot your password?
+          </a>
+        </div>
+      </div>
+
+      <!-- Submit button -->
+      <div class="login-button-container">
+        <app-app-button
+          [label]="isLoading ? 'Signing in...' : 'Sign in'"
+          type="submit"
+          [disabled]="loginForm.invalid || isLoading"
+          [isLoading]="isLoading"
+          variant="primary"
+          [fullWidth]="true"
+          (onClick)="onSubmit()"
+        ></app-app-button>
+      </div>
+    </form>
+  </div>
+</div>

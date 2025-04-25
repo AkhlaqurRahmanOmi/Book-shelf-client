@@ -1,0 +1,29 @@
+<div class="landing-page app-gradient-background">
+  <div class="landing-content app-card">
+    <h1 class="app-title">{{ appName }}</h1>
+    <div class="landing-loader">
+      <app-loader
+        width="150px"
+        height="150px"
+        backgroundColor="transparent"
+      ></app-loader>
+    </div>
+
+    <!-- Progress bar -->
+    <div class="landing-progress-container">
+      <div class="landing-progress-bar" [style.width.%]="progress"></div>
+    </div>
+
+    <!-- Countdown text -->
+    <p class="landing-countdown-text">{{ countdownText }}</p>
+
+    <!-- Skip button -->
+    <app-app-button
+      label="Skip"
+      variant="secondary"
+      size="small"
+      (onClick)="skipIntro()"
+      class="landing-skip-button"
+    ></app-app-button>
+  </div>
+</div>

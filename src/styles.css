@@ -1,1 +1,176 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+/* Theme Variables */
+:root {
+  /* Primary Colors */
+  --primary-color: #6e8efb;
+  --primary-color-light: #a5c0fd;
+  --primary-color-dark: #4a6cd9;
+
+  /* Secondary Colors */
+  --secondary-color: #a777e3;
+  --secondary-color-light: #c4a0ed;
+  --secondary-color-dark: #8a4fd0;
+
+  /* Accent Colors */
+  --accent-color: #f8a5c2;
+  --accent-color-light: #ffc2d7;
+  --accent-color-dark: #e77a9e;
+
+  /* Neutral Colors */
+  --background-color: #f8f9fa;
+  --text-color: #333333;
+  --text-color-light: #666666;
+  --text-color-lighter: #999999;
+
+  /* UI Colors */
+  --success-color: #28a745;
+  --warning-color: #ffc107;
+  --error-color: #dc3545;
+  --info-color: #17a2b8;
+
+  /* Gradient Colors */
+  --gradient-start: var(--primary-color);
+  --gradient-middle: var(--secondary-color);
+  --gradient-end: var(--accent-color);
+
+  /* Component Colors */
+  --card-background: rgba(255, 255, 255, 0.1);
+  --card-shadow: rgba(0, 0, 0, 0.1);
+  --button-background: var(--primary-color);
+  --button-hover: var(--primary-color-dark);
+  --input-border: #ced4da;
+  --input-focus: var(--primary-color);
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-xxl: 3rem;
+
+  /* Border Radius */
+  --border-radius-sm: 0.25rem;
+  --border-radius-md: 0.5rem;
+  --border-radius-lg: 1rem;
+
+  /* Font Sizes */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-xxl: 2rem;
+  --font-size-xxxl: 3rem;
+}
+
+/* Global Styles */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  line-height: 1.5;
+}
+
+/* Common Component Styles */
+.app-card {
+  background-color: var(--card-background);
+  backdrop-filter: blur(10px);
+  border-radius: var(--border-radius-lg);
+  box-shadow: 0 8px 32px var(--card-shadow);
+  padding: var(--spacing-xl);
+}
+
+.app-title {
+  font-size: var(--font-size-xxxl);
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  margin-bottom: var(--spacing-xl);
+}
+
+.app-subtitle {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: var(--spacing-lg);
+}
+
+.app-button {
+  background-color: var(--button-background);
+  color: white;
+  border: none;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--border-radius-md);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.app-button:hover {
+  background-color: var(--button-hover);
+}
+
+.app-button-secondary {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.app-button-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.app-input {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--input-border);
+  border-radius: var(--border-radius-md);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.app-input:focus {
+  outline: none;
+  border-color: var(--input-focus);
+  box-shadow: 0 0 0 3px rgba(110, 142, 251, 0.25);
+}
+
+.app-label {
+  display: block;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-color);
+}
+
+.app-error {
+  color: var(--error-color);
+  font-size: var(--font-size-xs);
+  margin-top: var(--spacing-xs);
+}
+
+.app-success {
+  color: var(--success-color);
+  font-size: var(--font-size-sm);
+}
+
+.app-gradient-background {
+  background: linear-gradient(135deg,
+    var(--gradient-start),
+    var(--gradient-middle),
+    var(--gradient-end));
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

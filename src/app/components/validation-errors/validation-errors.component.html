@@ -1,0 +1,3 @@
+<div *ngIf="errorMessages.length > 0" class="validation-errors app-error">
+  <p *ngFor="let message of errorMessages" class="validation-error-message">{{ message }}</p>
+</div>

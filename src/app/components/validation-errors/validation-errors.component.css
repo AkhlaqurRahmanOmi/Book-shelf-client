@@ -1,0 +1,7 @@
+.validation-errors {
+  margin-top: var(--spacing-xs);
+}
+
+.validation-error-message {
+  margin-bottom: var(--spacing-xs);
+}

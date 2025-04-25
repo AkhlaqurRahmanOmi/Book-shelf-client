@@ -1,0 +1,19 @@
+<button
+  [type]="type"
+  [disabled]="disabled"
+  [ngClass]="[
+    'app-button-component',
+    variant === 'primary' ? 'app-button-primary' : '',
+    variant === 'secondary' ? 'app-button-secondary' : '',
+    variant === 'outline' ? 'app-button-outline' : '',
+    variant === 'text' ? 'app-button-text' : '',
+    size === 'small' ? 'app-button-small' : '',
+    size === 'large' ? 'app-button-large' : '',
+    fullWidth ? 'app-button-full-width' : '',
+    customClass
+  ]"
+  (click)="handleClick()"
+>
+  <span *ngIf="isLoading" class="app-button-spinner"></span>
+  <span [ngClass]="{'app-button-label-with-spinner': isLoading}">{{ label }}</span>
+</button>

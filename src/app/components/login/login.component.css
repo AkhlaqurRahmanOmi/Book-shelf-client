@@ -1,0 +1,110 @@
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-xl);
+  background-color: var(--background-color);
+}
+
+.login-container {
+  max-width: 450px;
+  width: 100%;
+  background-color: white;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.login-subtext {
+  font-size: var(--font-size-sm);
+  color: var(--text-color-light);
+  margin-top: var(--spacing-sm);
+}
+
+.login-link {
+  color: var(--primary-color);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.login-link:hover {
+  color: var(--primary-color-dark);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.login-form-group {
+  margin-bottom: var(--spacing-md);
+}
+
+.login-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: var(--spacing-md) 0;
+}
+
+.login-remember {
+  display: flex;
+  align-items: center;
+}
+
+.login-checkbox {
+  height: 1rem;
+  width: 1rem;
+  color: var(--primary-color);
+  border-color: var(--input-border);
+  border-radius: var(--border-radius-sm);
+}
+
+.login-checkbox-label {
+  margin-left: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  color: var(--text-color);
+}
+
+.login-forgot {
+  font-size: var(--font-size-sm);
+}
+
+.login-button-container {
+  margin-top: var(--spacing-md);
+}
+
+.login-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: white;
+  background-color: var(--primary-color);
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover:not(:disabled) {
+  background-color: var(--primary-color-dark);
+}
+
+.login-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.login-error {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--error-color);
+  border-radius: var(--border-radius-md);
+  background-color: rgba(220, 53, 69, 0.1);
+}
