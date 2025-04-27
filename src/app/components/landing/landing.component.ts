@@ -40,7 +40,7 @@ export class LandingComponent implements OnInit, OnDestroy {
 
       // Redirect when complete
       if (count === this.redirectDelay * 10) {
-        this.router.navigate(['/login']);
+        this.router.navigate(['/home']);
       }
     });
   }
@@ -52,11 +52,11 @@ export class LandingComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Skip the countdown and go directly to login
+  // Skip the countdown and go directly to home
   skipIntro(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
-    this.router.navigate(['/login']);
+    this.router.navigate(['/home']);
   }
 }

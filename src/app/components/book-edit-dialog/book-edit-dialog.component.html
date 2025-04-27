@@ -1,0 +1,128 @@
+<div class="dialog-overlay" *ngIf="isOpen">
+  <div class="dialog-container">
+    <div class="dialog-header">
+      <h2 class="dialog-title">{{ dialogTitle }}</h2>
+      <button class="dialog-close-button" (click)="onCancel()">×</button>
+    </div>
+
+    <div class="dialog-content">
+      <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+        <!-- Title -->
+        <div class="form-group">
+          <app-app-input-field
+            formControlName="title"
+            label="Title"
+            type="text"
+            placeholder="Enter book title"
+          ></app-app-input-field>
+          <div *ngIf="bookForm.get('title')?.invalid && bookForm.get('title')?.touched" class="form-error">
+            Title is required
+          </div>
+        </div>
+
+        <!-- Author -->
+        <div class="form-group">
+          <app-app-input-field
+            formControlName="author"
+            label="Author"
+            type="text"
+            placeholder="Enter author name"
+          ></app-app-input-field>
+          <div *ngIf="bookForm.get('author')?.invalid && bookForm.get('author')?.touched" class="form-error">
+            Author is required
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea
+            formControlName="description"
+            class="form-textarea"
+            placeholder="Enter book description"
+            rows="4"
+          ></textarea>
+          <div *ngIf="bookForm.get('description')?.invalid && bookForm.get('description')?.touched" class="form-error">
+            Description is required
+          </div>
+        </div>
+
+        <!-- Cover Image URL -->
+        <div class="form-group">
+          <app-app-input-field
+            formControlName="coverImage"
+            label="Cover Image URL"
+            type="text"
+            placeholder="Enter cover image URL (optional)"
+          ></app-app-input-field>
+        </div>
+
+        <!-- Genre -->
+        <div class="form-group">
+          <app-app-input-field
+            formControlName="genre"
+            label="Genre"
+            type="text"
+            placeholder="Enter book genre (optional)"
+          ></app-app-input-field>
+        </div>
+
+        <!-- Published Year -->
+        <div class="form-group">
+          <app-app-input-field
+            formControlName="publishedYear"
+            label="Published Year"
+            type="number"
+            placeholder="Enter published year (optional)"
+          ></app-app-input-field>
+          <div *ngIf="bookForm.get('publishedYear')?.errors?.['min'] && bookForm.get('publishedYear')?.touched" class="form-error">
+            Year must be at least 1000
+          </div>
+          <div *ngIf="bookForm.get('publishedYear')?.errors?.['max'] && bookForm.get('publishedYear')?.touched" class="form-error">
+            Year cannot be in the future
+          </div>
+        </div>
+
+        <!-- Rating -->
+        <div class="form-group">
+          <app-app-input-field
+            formControlName="rating"
+            label="Rating (0-5)"
+            type="number"
+            placeholder="Enter rating (optional)"
+          ></app-app-input-field>
+          <div *ngIf="bookForm.get('rating')?.errors?.['min'] && bookForm.get('rating')?.touched" class="form-error">
+            Rating must be at least 0
+          </div>
+          <div *ngIf="bookForm.get('rating')?.errors?.['max'] && bookForm.get('rating')?.touched" class="form-error">
+            Rating cannot be more than 5
+          </div>
+        </div>
+
+        <!-- Read Status -->
+        <div class="form-group form-checkbox">
+          <label class="form-checkbox-label">
+            <input type="checkbox" formControlName="isRead">
+            <span>Mark as read</span>
+          </label>
+        </div>
+
+        <div class="dialog-actions">
+          <app-app-button
+            label="Cancel"
+            variant="outline"
+            type="button"
+            (onClick)="onCancel()"
+          ></app-app-button>
+
+          <app-app-button
+            label="Save"
+            variant="primary"
+            type="submit"
+            [disabled]="bookForm.invalid"
+          ></app-app-button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

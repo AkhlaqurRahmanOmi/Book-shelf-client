@@ -1,0 +1,117 @@
+.book-card {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: var(--border-radius-lg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+}
+
+.book-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.book-card-cover {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.book-cover-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.book-card:hover .book-cover-image {
+  transform: scale(1.05);
+}
+
+.book-card-status {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+}
+
+.book-read {
+  background-color: var(--success-color);
+  color: white;
+}
+
+.book-unread {
+  background-color: var(--warning-color);
+  color: #333;
+}
+
+.book-card-content {
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.book-card-title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  margin: 0 0 var(--spacing-xs) 0;
+  color: var(--text-color);
+}
+
+.book-card-author {
+  font-size: var(--font-size-sm);
+  color: var(--text-color-light);
+  margin: 0 0 var(--spacing-md) 0;
+}
+
+.book-card-details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.book-card-detail {
+  font-size: var(--font-size-xs);
+}
+
+.book-card-detail-label {
+  font-weight: 500;
+  color: var(--text-color-light);
+  margin-right: var(--spacing-xs);
+}
+
+.book-card-detail-value {
+  color: var(--text-color);
+}
+
+.book-card-description {
+  font-size: var(--font-size-sm);
+  color: var(--text-color);
+  margin-bottom: var(--spacing-md);
+  flex-grow: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.book-card-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.book-card-action-buttons {
+  display: flex;
+  gap: var(--spacing-xs);
+}

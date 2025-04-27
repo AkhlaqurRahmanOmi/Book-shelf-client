@@ -1,0 +1,82 @@
+<div class="home-container">
+  <div class="home-header">
+    <div class="home-title-container">
+      <h1 class="home-title">My Bookshelf</h1>
+      <app-app-button
+        label="Logout"
+        variant="secondary"
+        (onClick)="logout()"
+      ></app-app-button>
+    </div>
+
+    <div class="home-actions">
+      <div class="search-container">
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Search books..."
+          (input)="onSearch($event)"
+        >
+      </div>
+
+      <app-app-button
+        label="Add Book"
+        variant="primary"
+        (onClick)="onAddBook()"
+      ></app-app-button>
+    </div>
+  </div>
+
+  <!-- Error message -->
+  <div *ngIf="errorMessage" class="error-container">
+    <p class="error-message">{{ errorMessage }}</p>
+    <app-app-button
+      label="Try Again"
+      variant="primary"
+      (onClick)="loadBooks()"
+    ></app-app-button>
+  </div>
+
+  <!-- Loading state -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="loading-spinner"></div>
+    <p class="loading-text">Loading books...</p>
+  </div>
+
+  <!-- Empty state -->
+  <div *ngIf="!isLoading && !errorMessage && filteredBooks.length === 0" class="empty-container">
+    <div *ngIf="searchQuery" class="empty-search">
+      <h2>No books found</h2>
+      <p>No books match your search for "{{ searchQuery }}"</p>
+    </div>
+
+    <div *ngIf="!searchQuery" class="empty-library">
+      <h2>Your bookshelf is empty</h2>
+      <p>Add your first book to get started</p>
+      <app-app-button
+        label="Add Your First Book"
+        variant="primary"
+        (onClick)="onAddBook()"
+      ></app-app-button>
+    </div>
+  </div>
+
+  <!-- Book grid -->
+  <div *ngIf="!isLoading && !errorMessage && filteredBooks.length > 0" class="book-grid">
+    <app-book-card
+      *ngFor="let book of filteredBooks"
+      [book]="book"
+      (edit)="onEditBook($event)"
+      (delete)="onDeleteBook($event)"
+      (toggleRead)="onToggleRead($event)"
+    ></app-book-card>
+  </div>
+
+  <!-- Book edit dialog -->
+  <app-book-edit-dialog
+    [book]="selectedBook"
+    [isOpen]="isDialogOpen"
+    (save)="onSaveBook($event)"
+    (cancel)="onCancelDialog()"
+  ></app-book-edit-dialog>
+</div>

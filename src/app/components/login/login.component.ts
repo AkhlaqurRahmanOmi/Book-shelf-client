@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
       ]
     };
 
-    
+
 
     // Create form group from configuration
     this.loginForm = this.validationService.createFormGroup(this.formConfig);
@@ -83,15 +83,15 @@ export class LoginComponent implements OnInit {
 
     const { email, password } = this.loginForm.value;
 
-    this.authService.login(email, password).subscribe({
+    this.authService.login({ email, password }).subscribe({
       next: () => {
         this.isLoading = false;
-        // Navigate to home page or dashboard after successful login
-        this.router.navigate(['/']);
+        // Navigate to home page after successful login
+        this.router.navigate(['/home']);
       },
       error: (error) => {
         this.isLoading = false;
-        this.errorMessage = 'Invalid email or password. Please try again.';
+        this.errorMessage = error.message || 'Invalid email or password. Please try again.';
         console.error('Login error:', error);
       }
     });

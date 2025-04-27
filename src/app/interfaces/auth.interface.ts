@@ -1,8 +1,10 @@
 export interface User {
-  id?: string;
+  id: string;
   email: string;
   username?: string;
   name?: string;
+  createdAt?: string | Date;
+  updatedAt?: string | Date;
 }
 
 export interface LoginRequest {
@@ -15,9 +17,4 @@ export interface SignupRequest {
   password: string;
   username?: string;
   name?: string;
-}
-
-export interface AuthResponse {
-  user: User;
-  token: string;
 }

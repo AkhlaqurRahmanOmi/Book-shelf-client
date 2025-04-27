@@ -117,7 +117,7 @@ export class SignupComponent implements OnInit {
     const { name, username, email, password } = this.signupForm.value;
     const userData: SignupRequest = { name, username, email, password };
 
-    this.authService.signup(userData).subscribe({
+    this.authService.register(userData).subscribe({
       next: () => {
         this.isLoading = false;
         this.successMessage = 'Account created successfully! Redirecting to login...';

@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { delay, tap, catchError, map } from 'rxjs/operators';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
-import { User, LoginRequest, SignupRequest, AuthResponse } from '../interfaces/auth.interface';
+import { User, LoginRequest, SignupRequest } from '../interfaces/auth.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = environment.apiUrl;
-  private tokenKey = 'auth_token';
-  private userKey = 'current_user';
+  private apiUrl = `${environment.apiUrl}/users`;
 
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
@@ -19,32 +18,33 @@ export class AuthService {
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
-  constructor(private http: HttpClient) {
-    // Check if user is stored in localStorage on service initialization
-    this.loadUserFromStorage();
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    withCredentials: true // Important for session-based auth
+  };
+
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {
+    // Check if user is already authenticated
+    this.checkAuthStatus();
   }
 
-  private loadUserFromStorage(): void {
-    const storedToken = localStorage.getItem(this.tokenKey);
-    const storedUser = localStorage.getItem(this.userKey);
-
-    if (storedToken && storedUser) {
-      try {
-        const user = JSON.parse(storedUser);
+  // Check if user is already authenticated
+  checkAuthStatus(): void {
+    this.http.get<User>(`${this.apiUrl}/profile`, this.httpOptions)
+      .pipe(
+        catchError(() => {
+          this.currentUserSubject.next(null);
+          this.isAuthenticatedSubject.next(false);
+          return throwError(() => new Error('Not authenticated'));
+        })
+      )
+      .subscribe(user => {
         this.currentUserSubject.next(user);
         this.isAuthenticatedSubject.next(true);
-      } catch (error) {
-        // If there's an error parsing the user, clear storage
-        this.clearStorage();
-      }
-    }
-  }
-
-  private clearStorage(): void {
-    localStorage.removeItem(this.tokenKey);
-    localStorage.removeItem(this.userKey);
-    this.currentUserSubject.next(null);
-    this.isAuthenticatedSubject.next(false);
+      });
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {
@@ -61,90 +61,61 @@ export class AuthService {
     return throwError(() => new Error(errorMessage));
   }
 
-  // For development/testing without a backend
-  simulateLogin(email: string, password: string): Observable<User> {
-    return of({
-      id: '1',
-      email: email,
-      username: email.split('@')[0]
-    }).pipe(
-      delay(800), // Simulate network delay
-      tap(user => {
-        // Store user in localStorage
-        localStorage.setItem(this.userKey, JSON.stringify(user));
-        localStorage.setItem(this.tokenKey, 'fake-jwt-token');
-
-        // Update subjects
-        this.currentUserSubject.next(user);
-        this.isAuthenticatedSubject.next(true);
-      })
-    );
-  }
-
-  // Real login with backend
-  login(email: string, password: string): Observable<User> {
-    // For development without backend, use simulateLogin
-    if (!environment.apiUrl) {
-      return this.simulateLogin(email, password);
-    }
-
-    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, { email, password })
+  // Register a new user
+  register(userData: SignupRequest): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}/register`, userData, this.httpOptions)
       .pipe(
-        map(response => {
-          // Store token and user
-          localStorage.setItem(this.tokenKey, response.token);
-          localStorage.setItem(this.userKey, JSON.stringify(response.user));
-
-          // Update subjects
-          this.currentUserSubject.next(response.user);
+        tap(user => {
+          this.currentUserSubject.next(user);
           this.isAuthenticatedSubject.next(true);
-
-          return response.user;
         }),
         catchError(this.handleError)
       );
   }
 
-  // Signup with backend
-  signup(userData: SignupRequest): Observable<User> {
-    // For development without backend
-    if (!environment.apiUrl) {
-      return this.simulateLogin(userData.email, userData.password);
-    }
-
-    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/signup`, userData)
+  // Login user
+  login(loginData: LoginRequest): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}/login`, loginData, this.httpOptions)
       .pipe(
-        map(response => {
-          // Store token and user
-          localStorage.setItem(this.tokenKey, response.token);
-          localStorage.setItem(this.userKey, JSON.stringify(response.user));
-
-          // Update subjects
-          this.currentUserSubject.next(response.user);
+        tap(user => {
+          this.currentUserSubject.next(user);
           this.isAuthenticatedSubject.next(true);
-
-          return response.user;
         }),
         catchError(this.handleError)
       );
   }
 
-  logout(): void {
-    // If we have a backend logout endpoint
-    if (environment.apiUrl) {
-      // Optional: Call logout endpoint
-      // this.http.post(`${this.apiUrl}/auth/logout`, {}).subscribe();
-    }
-
-    // Clear storage and update subjects
-    this.clearStorage();
+  // Logout user
+  logout(): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/logout`, {}, this.httpOptions)
+      .pipe(
+        tap(() => {
+          this.currentUserSubject.next(null);
+          this.isAuthenticatedSubject.next(false);
+          this.router.navigate(['/login']);
+        }),
+        catchError(this.handleError)
+      );
   }
 
-  getToken(): string | null {
-    return localStorage.getItem(this.tokenKey);
-  }
-
+  // Get current user
   getCurrentUser(): User | null {
     return this.currentUserSubject.value;
+  }
+
+  // Check if user is authenticated
+  isAuthenticated(): boolean {
+    return !!this.currentUserSubject.value;
+  }
+
+  // Update user profile
+  updateProfile(id: string, updateData: Partial<User>): Observable<User> {
+    return this.http.patch<User>(`${this.apiUrl}/${id}`, updateData, this.httpOptions)
+      .pipe(
+        tap(updatedUser => {
+          this.currentUserSubject.next(updatedUser);
+        }),
+        catchError(this.handleError)
+      );
   }
 }

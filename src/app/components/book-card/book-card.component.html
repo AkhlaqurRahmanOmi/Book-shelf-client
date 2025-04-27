@@ -1,0 +1,62 @@
+<div class="book-card">
+  <div class="book-card-cover">
+    <img [src]="book.coverImage || 'https://source.unsplash.com/random/300x450?book'" alt="{{ book.title }}" class="book-cover-image">
+    <div class="book-card-status" [ngClass]="{'book-read': book.isRead, 'book-unread': !book.isRead}">
+      {{ book.isRead ? 'Read' : 'Unread' }}
+    </div>
+  </div>
+
+  <div class="book-card-content">
+    <h3 class="book-card-title">{{ book.title }}</h3>
+    <p class="book-card-author">by {{ book.author }}</p>
+
+    <div class="book-card-details">
+      <div class="book-card-detail" *ngIf="book.genre">
+        <span class="book-card-detail-label">Genre:</span>
+        <span class="book-card-detail-value">{{ book.genre }}</span>
+      </div>
+
+      <div class="book-card-detail" *ngIf="book.publishedYear">
+        <span class="book-card-detail-label">Published:</span>
+        <span class="book-card-detail-value">{{ book.publishedYear }}</span>
+      </div>
+
+      <div class="book-card-detail" *ngIf="book.rating">
+        <span class="book-card-detail-label">Rating:</span>
+        <span class="book-card-detail-value">{{ book.rating }}/5</span>
+      </div>
+
+      <div class="book-card-detail">
+        <span class="book-card-detail-label">Added:</span>
+        <span class="book-card-detail-value">{{ formatDate(book.dateAdded) }}</span>
+      </div>
+    </div>
+
+    <p class="book-card-description">{{ book.description }}</p>
+
+    <div class="book-card-actions">
+      <app-app-button
+        label="Mark as {{ book.isRead ? 'Unread' : 'Read' }}"
+        variant="outline"
+        size="small"
+        (onClick)="onToggleRead()"
+      ></app-app-button>
+
+      <div class="book-card-action-buttons">
+        <app-app-button
+          label="Edit"
+          variant="secondary"
+          size="small"
+          (onClick)="onEdit()"
+        ></app-app-button>
+
+        <app-app-button
+          label="Delete"
+          variant="text"
+          size="small"
+          (onClick)="onDelete()"
+        ></app-app-button>
+      </div>
+    </div>
+  </div>
+</div>
