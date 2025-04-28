@@ -17,7 +17,7 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModu
   ]
 })
 export class AppInputFieldComponent implements ControlValueAccessor {
-   @Input() label: string = ''; // Label for the input field
+  @Input() label: string = ''; // Label for the input field
   @Input() type: string = 'text'; // Input type (e.g., text, password, email)
   @Input() placeholder: string = ''; // Placeholder text
   @Input() customClass: string = ''; // Custom Tailwind CSS classes

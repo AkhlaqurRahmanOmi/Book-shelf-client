@@ -36,7 +36,7 @@ export class BookCardComponent {
   }
 
   // Format the date to a readable string
-  formatDate(date: Date): string {
+  formatDate(date: string | Date): string {
     return new Date(date).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',

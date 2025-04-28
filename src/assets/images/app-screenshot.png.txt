@@ -1,0 +1,9 @@
+This is a placeholder for the app screenshot. 
+Replace this file with an actual screenshot of your BookShelf application.
+
+To take a screenshot:
+1. Run your application locally
+2. Navigate to the home page with some books added
+3. Take a screenshot of the entire page
+4. Save it as 'app-screenshot.png' in this directory
+5. Delete this text file
